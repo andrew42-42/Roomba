@@ -9,6 +9,7 @@ public class Driver implements Directions {
 // It will be assigned a value in the getInfo method
 	private static Robot roomba; 
 
+	
 
 	// You will add very many variables!!
 
@@ -37,6 +38,9 @@ public class Driver implements Directions {
     World.setVisible(true);
 		World.setDelay(2);
 		Robot roomba = new Robot(7,6,East,0);
+		int areaOfRoom = 1;
+		int numOfPiles = 0;
+		int numOfBeepers = 0;
 
     
 
@@ -50,8 +54,13 @@ public class Driver implements Directions {
 		// what is that and why are we getting it?
 		while(canMove==true){
 			 roomba.move();
+			 areaOfRoom+=1;
+			 if(roomba.nextToABeeper()==true){
+				numOfPiles+=1;
+			 }
 			 while(roomba.nextToABeeper()==true){
 			 roomba.pickBeeper();
+			 numOfBeepers+=1;
 		   }
 		  if(roomba.frontIsClear()==false){
 				if(roomba.facingWest()==true)
@@ -61,6 +70,7 @@ public class Driver implements Directions {
 				roomba.turnLeft();
 			  if(roomba.frontIsClear()==true){
 					roomba.move();
+					areaOfRoom+=1;
 					roomba.turnLeft();
 					roomba.turnLeft();
 					roomba.turnLeft();
@@ -74,6 +84,7 @@ public class Driver implements Directions {
 			 roomba.turnLeft();
 			 if(roomba.frontIsClear()==true){
 				roomba.move();
+				areaOfRoom+=1;
 				roomba.turnLeft();
 			 }
 			 else if(roomba.frontIsClear()==false){
@@ -101,7 +112,9 @@ public class Driver implements Directions {
 	 * this info in the console (boring) or you can present using JOptionPane (cool!)
 	 */
 
-    System.out.println("The biggest pile was ");
+    System.out.println("The area of the room is " + areaOfRoom);
+		System.out.println("There are " + numOfPiles + " piles");
+		System.out.println("There are " + numOfBeepers + " Beepers");
 
 
 

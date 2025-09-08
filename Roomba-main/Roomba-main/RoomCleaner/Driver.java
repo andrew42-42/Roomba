@@ -36,11 +36,13 @@ public class Driver implements Directions {
 
 		World.readWorld(wrldName);
     World.setVisible(true);
-		World.setDelay(2);
+		World.setDelay(0);
 		Robot roomba = new Robot(7,6,East,0);
-		int areaOfRoom = 1;
+		double areaOfRoom = 1;
 		int numOfPiles = 0;
 		int numOfBeepers = 0;
+		int largestPile = 0;
+		int beepersInPile = 0;
 
     
 
@@ -53,15 +55,20 @@ public class Driver implements Directions {
 		// the line below causes a null pointer exception
 		// what is that and why are we getting it?
 		while(canMove==true){
-			 roomba.move();
-			 areaOfRoom+=1;
+			roomba.move();
+			 areaOfRoom++;
 			 if(roomba.nextToABeeper()==true){
-				numOfPiles+=1;
+				numOfPiles++;
 			 }
 			 while(roomba.nextToABeeper()==true){
-			 roomba.pickBeeper();
-			 numOfBeepers+=1;
+			  beepersInPile++;
+			  roomba.pickBeeper();
+			  numOfBeepers++;
 		   }
+			 if(beepersInPile > largestPile){
+				largestPile = beepersInPile;
+			 }
+			 beepersInPile = 0;
 		  if(roomba.frontIsClear()==false){
 				if(roomba.facingWest()==true)
 				{
@@ -70,7 +77,7 @@ public class Driver implements Directions {
 				roomba.turnLeft();
 			  if(roomba.frontIsClear()==true){
 					roomba.move();
-					areaOfRoom+=1;
+					areaOfRoom++;
 					roomba.turnLeft();
 					roomba.turnLeft();
 					roomba.turnLeft();
@@ -84,7 +91,7 @@ public class Driver implements Directions {
 			 roomba.turnLeft();
 			 if(roomba.frontIsClear()==true){
 				roomba.move();
-				areaOfRoom+=1;
+				areaOfRoom++;
 				roomba.turnLeft();
 			 }
 			 else if(roomba.frontIsClear()==false){
@@ -112,9 +119,15 @@ public class Driver implements Directions {
 	 * this info in the console (boring) or you can present using JOptionPane (cool!)
 	 */
 
-    System.out.println("The area of the room is " + areaOfRoom);
+   double avgPileSize = (numOfBeepers) / (numOfPiles);
+	 double percentDirty = (numOfPiles) / (areaOfRoom) * 100;
+	 System.out.println("The area of the room is " + areaOfRoom);
 		System.out.println("There are " + numOfPiles + " piles");
-		System.out.println("There are " + numOfBeepers + " Beepers");
+		System.out.println("There are " + numOfBeepers + " beepers");
+		System.out.println("The largest pile had " + largestPile + " beepers");
+		System.out.println("There was an average of " + avgPileSize + " beepers per pile");
+		System.out.println("The room was " + percentDirty + "% dirty");
+
 
 
 

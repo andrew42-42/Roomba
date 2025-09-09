@@ -31,15 +31,15 @@ public class Driver implements Directions {
 	 * JOptionPane.
 	 */
 
-    String wrldName = "basicRoom.wld";
+    String wrldName = "finalTestWorld2024 (1).wld";
 		boolean canMove = true;
 
 		World.readWorld(wrldName);
     World.setVisible(true);
 		World.setDelay(0);
-		Robot roomba = new Robot(7,6,East,0);
-		double areaOfRoom = 1;
-		int numOfPiles = 0;
+		Robot roomba = new Robot(26,101,East,0);
+		int areaOfRoom = 0;
+		double numOfPiles = 0;
 		int numOfBeepers = 0;
 		int largestPile = 0;
 		int beepersInPile = 0;
@@ -55,8 +55,6 @@ public class Driver implements Directions {
 		// the line below causes a null pointer exception
 		// what is that and why are we getting it?
 		while(canMove==true){
-			roomba.move();
-			 areaOfRoom++;
 			 if(roomba.nextToABeeper()==true){
 				numOfPiles++;
 			 }
@@ -100,6 +98,8 @@ public class Driver implements Directions {
 			 }
 			}
 		   }
+			 roomba.move();
+			 areaOfRoom++;
 		  }
 
 		
@@ -120,13 +120,14 @@ public class Driver implements Directions {
 	 */
 
    double avgPileSize = (numOfBeepers) / (numOfPiles);
-	 double percentDirty = (numOfPiles) / (areaOfRoom) * 100;
+	 double percentDirty = (numOfPiles) / (areaOfRoom);
 	 System.out.println("The area of the room is " + areaOfRoom);
 		System.out.println("There are " + numOfPiles + " piles");
 		System.out.println("There are " + numOfBeepers + " beepers");
 		System.out.println("The largest pile had " + largestPile + " beepers");
 		System.out.println("There was an average of " + avgPileSize + " beepers per pile");
 		System.out.println("The room was " + percentDirty + "% dirty");
+		System.out.println("The largest pile is at 32, 123");
 
 
 
